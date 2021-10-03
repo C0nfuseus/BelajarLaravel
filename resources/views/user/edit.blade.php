@@ -23,8 +23,8 @@
                     </div>
                     <br> 
                     @endif
-                    <form method="post" action="{{ route('user.update', $user->id_user) }}">
-                        @method('PUT') 
+                    <form  action="{{ route('user.update', $user->id_user)}}"  method="POST">
+                        @method('POST') 
                         @csrf
                         <div class="form-group">
                             <label for="nama_user">Nama User</label>

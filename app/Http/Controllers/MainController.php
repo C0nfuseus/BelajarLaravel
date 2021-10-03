@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\klasifikasi;
 use App\Models\bidang;
 use App\Models\Surat_masuk;
@@ -12,27 +13,32 @@ use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
 {
-    function login (){
-        return view ('auth.login');
+    function login()
+    {
+        return view('auth.login');
     }
-    function register(){
+    function register()
+    {
         $data1 = bidang::all();
         $data2 = user_role::all();
-        return view ('auth.register', ['data1'=>$data1,'data2'=>$data2]);
+        return view('auth.register', ['data1' => $data1, 'data2' => $data2]);
     }
 
-    function user_dashboard(){
-        $data = ['LoggedUserInfo'=>users::where('id_user','=', session('LoggedUser'))->first()];
-        return view ('user.dashboard', $data);
+    function user_dashboard()
+    {
+        $data = ['LoggedUserInfo' => users::where('id_user', '=', session('LoggedUser'))->first()];
+        return view('user.dashboard', $data);
     }
-    
-    function user_savemail(){
+
+    function user_savemail()
+    {
         $data = klasifikasi::all();
-        return view ('user.savemail', ['data'=>$data]);
+        return view('user.savemail', ['data' => $data]);
     }
 
-    function logout (){
-        if(session()->has('LoggedUser')){
+    function logout()
+    {
+        if (session()->has('LoggedUser')) {
             session()->pull('LoggedUser');
             return redirect('/auth/login');
         };
@@ -64,8 +70,8 @@ class MainController extends Controller
      */
     public function edit($id_user)
     {
-        $users= Users::findOrFail($id_user);
-        return view('user.edit', ['user' =>$users ]); 
+        $users = Users::findOrFail($id_user);
+        return view('user.edit', ['user' => $users]);
     }
 
     /**
@@ -78,11 +84,11 @@ class MainController extends Controller
     function update(Request $request, $id_user)
     {
         $request->validate([
-            'nama_user'=>'required',
-            'username'=>'required',
-            'id_bidang'=>'required',
-            'id_role'=>'required',
-            'jabatan'=>'required',
+            'nama_user' => 'required',
+            'username' => 'required',
+            'id_bidang' => 'required',
+            'id_role' => 'required',
+            'jabatan' => 'required',
         ]);
 
         $user = users::findOrFail($id_user);
@@ -93,8 +99,8 @@ class MainController extends Controller
         $user->jabatan = $request->get('jabatan');
         $save = $user->save();
 
-        if($save){
-            return redirect('/user')->with('success', 'Contact updated!');
+        if ($save) {
+            return redirect('/user/index')->with('success', 'Contact updated!');
         }
     }
 
@@ -109,19 +115,20 @@ class MainController extends Controller
         $user = users::findOrFail($id_user);
         $user->delete();
 
-        return redirect('/user')->with('success', 'Contact deleted!');
+        return redirect('/user/index')->with('success', 'Contact deleted!');
     }
 
-    function save(Request $request){
-        
+    function save(Request $request)
+    {
+
         //Validate requests
         $request->validate([
-            'nama_user'=>'required',
-            'username'=>'required|unique:users',
-            'id_bidang'=>'required',
-            'id_role'=>'required',
-            'jabatan'=>'required',
-            'password'=>'required|min:5|max:12'
+            'nama_user' => 'required',
+            'username' => 'required|unique:users',
+            'id_bidang' => 'required',
+            'id_role' => 'required',
+            'jabatan' => 'required',
+            'password' => 'required|min:5|max:12'
         ]);
 
         //insert data into database
@@ -134,32 +141,33 @@ class MainController extends Controller
         $user->jabatan = $request->jabatan;
         $save = $user->save();
 
-        if($save){
-            return back()->with('success','New User has been successfully added to database');
-        }else{
-            return back()->with('fail','Something went wrong, try again later');
+        if ($save) {
+            return back()->with('success', 'New User has been successfully added to database');
+        } else {
+            return back()->with('fail', 'Something went wrong, try again later');
         }
-
     }
 
-    function user_save(Request $request){
+    function user_save(Request $request)
+    {
 
         //Validate requests
-        $request->validate([
-            'no_surat'=>'required',
-            'instansi_pengirim'=>'required',
-            'perihal'=>'required',
-            'file_surat' => 'required|mimes:pdf|max:1024',
-            'kode_klas'=>'required'
-        ],
-        ['file_surat.max' => 'Ukuran maksimum 1MB']
+        $request->validate(
+            [
+                'no_surat' => 'required',
+                'instansi_pengirim' => 'required',
+                'perihal' => 'required',
+                'file_surat' => 'required|mimes:pdf|max:1024',
+                'kode_klas' => 'required'
+            ],
+            ['file_surat.max' => 'Ukuran maksimum 1MB']
         );
 
         //insert data into database
         $surat = new surat_masuk;
-        
 
-        if($request->file('file_surat')) {
+
+        if ($request->file('file_surat')) {
             $surat->no_surat = $request->no_surat;
             $surat->instansi_pengirim = $request->instansi_pengirim;
             $surat->bidang_instansi = $request->bidang_instansi;
@@ -167,42 +175,42 @@ class MainController extends Controller
             $surat->tgl_terimasurat = $request->tgl_terimasurat;
             $surat->tgl_surat = $request->tgl_surat;
             $surat->kode_klas = $request->kode_klas;
-            $fileName = $request->kode_klas.'_'.date('Ymd').'.pdf';
+            $fileName = $request->kode_klas . '_' . date('Ymd') . '.pdf';
             $filePath = $request->file('file_surat')->storeAs('uploads', $fileName, 'public');
 
             $surat->file_surat = '/storage/' . $filePath;
         }
-        
+
         $save = $surat->save();
-        
-        if($save){
-            return back()->with('success','Surat berhasil masuk ke database');
-        }else{
-            return back()->with('fail','Something went wrong, try again later');
+
+        if ($save) {
+            return back()->with('success', 'Surat berhasil masuk ke database');
+        } else {
+            return back()->with('fail', 'Something went wrong, try again later');
         }
-    
     }
 
-    function check(Request $request){
+    function check(Request $request)
+    {
         //Validate requests
         $request->validate([
-            'username'=>'required',
-            'password'=>'required|min:5|max:12'
+            'username' => 'required',
+            'password' => 'required|min:5|max:12'
         ]);
 
-        $userInfo = users::where('username','=', $request->username)->first();  
-        if (!$userInfo){
-                return back()->with('fail','We do not recognize your username');
-            }else{
-                //check password
-                if(Hash::check($request->password, $userInfo->password )){
-                    $request->session()->put('LoggedUser', $userInfo->id_user);
-                    //return redirect()->route('user.dashboard');
-                    return redirect('user/{$id_user}/dashboard');
-                }else {
+        $userInfo = users::where('username', '=', $request->username)->first();
+        if (!$userInfo) {
+            return back()->with('fail', 'We do not recognize your username');
+        } else {
+            //check password
+            if (Hash::check($request->password, $userInfo->password)) {
+                $request->session()->put('LoggedUser', $userInfo->id_user);
+                //return redirect()->route('user.dashboard');
+                return redirect('user/dashboard');
+            } else {
 
-                    return back()->with('fail','Incorrect password');
-                }
+                return back()->with('fail', 'Incorrect password');
             }
+        }
     }
 }
