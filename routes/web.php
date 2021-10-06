@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\DisposisiController;
+use App\Http\Controllers\TrackingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,10 +22,8 @@ Route::get('/', function () {
 
 
 Route::post('/auth/save', [MainController::class, 'save'])->name('auth.save');
-Route::post('/user/save', [MainController::class, 'user_save'])->name('user.save');
 Route::post('/auth/check', [MainController::class, 'check'])->name('auth.check');
 Route::get('/auth/logout', [MainController::class, 'logout'])->name('auth.logout');
-Route::get('/user/savemail', [MainController::class, 'user_savemail'])->name('user.savemail');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 Route::get('/user/index', [MainController::class, 'index'])->name('user.index');
 Route::get('/user/edit/{id}', [MainController::class, 'edit'])->name('user.edit');
@@ -38,6 +38,11 @@ Route::get('/mail/edit/{id}', [MailController::class, 'edit'])->name('mail.edit'
 Route::post('/mail/update/{id}', [MailController::class, 'update'])->name('mail.update');
 Route::delete('/mail/{id}', [MailController::class, 'destroy'])->name('mail.destroy');
 
+Route::get('/tracking',[TrackingController::class, 'index'])->name('tracking.index');
+Route::get('/tracking/search',[TrackingController::class, 'search'])->name('tracking.search');
+
+Route::post('/disposisi/save', [DisposisiController::class, 'save'])->name('disposisi.save');
+Route::get('/disposisi/data', [DisposisiController::class, 'data'])->name('disposisi.data');
 
 Route::group(['middleware' => ['AuthCheck']], function () {
     Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');

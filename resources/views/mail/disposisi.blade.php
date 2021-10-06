@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
+    <title>Disposisi Surat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
@@ -15,9 +15,9 @@
         <div class="row vh-100">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="col-md-4 col-md-offset-4">
-                    <h4>Register TNDE DisBudPar Jawa Timur</h4>
+                    <h4>Disposisi Surat</h4>
                     <hr>
-                    <form action="{{ route('auth.save') }}" method="POST">
+                    <form action="{{ route('disposisi.save') }}" method="POST">
 
                         @if (Session::get('success'))
                             <div class="alert alert-success">
@@ -40,59 +40,52 @@
                         @endif
                         @csrf
                         <div class="form-group">
-                            <label>nama user</label>
-                            <input type="text" class="form-control" name="nama_user" placeholder="masukan nama lengkap"
-                                value="{{ old('nama_user') }}">
-                        </div>
-                        <span class="text-danger">@error('nama_user'){{ $message }} @enderror</span>
-                        <br>
-                        <div class="form-group">
-                            <label>NIP</label>
-                            <input type="number" class="form-control" name="username" placeholder="masukan NIP"
-                                value="{{ old('username') }}">
-                        </div>
-                        <span class="text-danger">@error('username'){{ $message }} @enderror</span>
-                        <br>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Enter password">
-                        </div>
-                        <span class="text-danger">@error('password'){{ $message }} @enderror</span>
-                        <br>
-                        <div class="form-group">
                             <label for="id_bidang">bidang</label>
                             <select id="id_bidang" name="id_bidang" class="form-control">
                                 <option value="">pilih bidang</option>
-                                @foreach ($data1 as $bidang)
+                                @foreach ($data3 as $bidang)
                                     <option value="{{ $bidang->id_bidang }}">{{ $bidang->id_bidang }} -
                                         {{ $bidang->nama_bidang }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <span class="text-danger">@error('id_bidang'){{ $message }} @enderror</span>
-                        <br>
                         <div class="form-group">
-                            <label for="id_role">user_role</label>
-                            <select id="id_role" name="id_role" class="form-control">
-                                <option value="">pilih role untuk pengguna</option>
-                                @foreach ($data2 as $role)
-                                    <option value="{{ $role->id_role }}">{{ $role->id_role }} -
-                                        {{ $role->role }}</option>
+                            <label for="id_surat">surat</label>
+                            <select id="id_surat" name="id_surat" class="form-control">
+                                <option value="">pilih surat</option>
+                                @foreach ($data2 as $surat)
+                                    <option value="{{ $surat->id_surat }}">{{ $surat->no_surat }} -
+                                        {{ $surat->instansi_pengirim }} - {{ $surat->perihal }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <span class="text-danger">@error('id_role'){{ $message }} @enderror</span>
-                        <br>
+                        <div class="form-group">
+                            <label for="id_user">penerima</label>
+                            <select id="id_user" name="id_user" class="form-control">
+                                <option value="">pilih penerima</option>
+                                @foreach ($data4 as $user)
+                                    <option value="{{ $user->id_user }}">{{ $user->nama_user }} -
+                                        {{ $user->jabatan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label>jabatan</label>
-                            <input type="text" class="form-control" name="jabatan" placeholder="masukan jabatan"
-                                value="{{ old('jabatan') }}">
+                            <select id="jabatan" class="form-control">
+                                <option value="">Pilih jabatan</option>
+                                <option value="Kabid">Kabid</option>
+                                <option value="Kadis">Kadis</option>
+                                <option value="Kasi">Kasi</option>
+                                <option value="Staff">Staff</option>
+                            </select>
                         </div>
-                        <span class="text-danger">@error('jabatan'){{ $message }} @enderror</span>
+                        <div class="form-group mb-3">
+                            <label>catatan disposisi</label>
+                            <input type="text" class="form-control" name="cat_kabid">
+                        </div>
+                        <button type="submit" class="btn btn-block btn-primary">Disposisikan surat</button>
                         <br>
-                        <button type="submit" class="btn btn-block btn-primary">Daftarkan User</button>
-                        <br>
-                        <a href="{{ route('user.index') }}">Back to index</a>
+                        <a href="{{ route('mail.index') }}">Back to index</a>
                     </form>
                 </div>
             </div>
