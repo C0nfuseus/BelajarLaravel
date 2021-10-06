@@ -13,7 +13,7 @@
             <div class="d-flex justify-content-center align-items-center">
                 <div class="col-md-4 col-md-offset-4">
                     <h4>Ini Dashboard TNDE DisBudPar Jawa Timur</h4><hr>
-                     <a href="{{ route('user.savemail')}}">create a new mail</a>
+                     <a href="{{ route('mail.index')}}">index surat</a>
                      <br>
                      <a href="{{ route('user.index')}}">index user</a>
                      <br>

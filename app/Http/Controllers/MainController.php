@@ -17,6 +17,7 @@ class MainController extends Controller
     {
         return view('auth.login');
     }
+    
     function register()
     {
         $data1 = bidang::all();

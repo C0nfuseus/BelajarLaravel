@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index mail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="min-height: 100vh">
+        <div class="row vh-100">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-md-4 col-md-offset-4">
+                    <h1 class="display-3">Index surat</h1>    
+                    <table class="table table-striped">
+                      <thead>
+                          <tr>
+                            <td>id_surat</td>
+                            <td>no_surat</td>
+                            <td>instansi_pengirim</td>
+                            <td>tgl_surat</td>
+                            <td>tgl_terimasurat</td>
+                            <td>perihal</td>
+                            <td>kode_klas</td>
+                            <td colspan = 2>Actions</td>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach($surat as $surat)
+                          <tr>
+                              <td>{{$surat->id_surat}}</td>
+                              <td>{{$surat->no_surat}}</td>
+                              <td>{{$surat->instansi_pengirim}}</td>
+                              <td>{{$surat->tgl_surat}}</td>
+                              <td>{{$surat->tgl_terimasurat}}</td>
+                              <td>{{$surat->perihal}}</td>
+                              <td>{{$surat->kode_klas}}</td>
+                              <td>
+                                <a href="{{ route('mail.edit',$surat->id_surat)}}" class="btn btn-primary">Edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('mail.destroy', $surat->id_surat)}}" method="post">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                          </tr>
+                          @endforeach
+                      </tbody>
+                    </table>
+                    <a href="{{ route('mail.savemail')}}" class="btn btn-primary">masukan surat baru</a>
+                     <br>
+                    <a href="{{ route ('user.dashboard')}}">Back to dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>
