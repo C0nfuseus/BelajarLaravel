@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <link href="../../css/login-tnde.css" rel="stylesheet" type="text/css">
+    <title>Sistem Tata Naskah Dinas Elektronik Disbudpar Jawa Timur</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel=icon type="image/png" sizes="16x16" href="../../asset/favicon-16x16.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
 <body>
@@ -12,7 +15,10 @@
         <div class="row vh-100">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="col-md-4 col-md-offset-4">
-                    <h4>Login TNDE DisBudPar Jawa Timur</h4><hr>
+                    <h4 class="justify-content-center">Login TNDE DisBudPar Jawa Timur</h4><hr>
+                    <div class="d-flex justify-content-center" id="container-logo">
+                        <img src="logo-disbudpar.png"    id="icon" alt="Icon-TNDE">
+                    </div>
                     <form action="{{ route('auth.check') }}" method="POST">
 
                         @if (Session::get('fail'))
@@ -24,17 +30,17 @@
                         @csrf
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" class="form-control" name="username" placeholder="Enter username" value="{{ old('username') }}" >
+                            <input type="text" class="form-control" name="username" placeholder="Masukkan username sesuai role" value="{{ old('username') }}" >
                         </div>
                         <span class="text-danger">@error ('username'){{ $message }} @enderror</span>
                         <br>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Enter password" >
+                            <input type="password" class="form-control" name="Masukkan password" placeholder="Enter password" >
                         </div>
                         <span class="text-danger">@error ('password'){{ $message }} @enderror</span>
                         <br>
-                        <button type="submit" class="btn btn-block btn-primary">Sign In</button>
+                        <button type="submit" class="btn btn-block btn-primary justify-content-center">Login</button>
                         <br>
                     </form>
                 </div>

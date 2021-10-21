@@ -1,0 +1,38 @@
+html {
+  background-color: #c7c7c7;
+}
+
+body {
+  font-family: "Helvetica", sans-serif;
+  height: 100vh;
+}
+
+#icon{
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+a{
+  color: #92badd;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.wrapper {
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+}
+
+#icon{
+  width: 120px;
+  height: 120px;
+}
+
+#container-logo{
+  margin: 16px;
+}
+
+
+
