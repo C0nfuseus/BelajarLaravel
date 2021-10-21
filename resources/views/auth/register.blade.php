@@ -15,7 +15,7 @@
         <div class="row vh-100">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="col-md-4 col-md-offset-4">
-                    <h4>Register TNDE DisBudPar Jawa Timur</h4>
+                    <h3>Register TNDE DisBudPar Jawa Timur</h3>
                     <hr>
                     <form action="{{ route('auth.save') }}" method="POST">
 

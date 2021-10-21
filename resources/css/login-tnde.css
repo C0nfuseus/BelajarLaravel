@@ -1,9 +1,10 @@
 html {
   background-color: #c7c7c7;
+  font-family: "Helvetica";
 }
 
 body {
-  font-family: "Helvetica", sans-serif;
+  font-family: "Arial", sans-serif;
   height: 100vh;
 }
 
