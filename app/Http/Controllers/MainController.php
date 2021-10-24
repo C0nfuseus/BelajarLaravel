@@ -149,6 +149,48 @@ class MainController extends Controller
         }
     }
 
+    function user_save(Request $request)
+    {
+
+        //Validate requests
+        $request->validate(
+            [
+                'no_surat' => 'required',
+                'instansi_pengirim' => 'required',
+                'perihal' => 'required',
+                'file_surat' => 'required|mimes:pdf|max:1024',
+                'kode_klas' => 'required'
+            ],
+            ['file_surat.max' => 'Ukuran maksimum 1MB']
+        );
+
+        //insert data into database
+        $surat = new surat_masuk;
+
+
+        if ($request->file('file_surat')) {
+            $surat->no_surat = $request->no_surat;
+            $surat->instansi_pengirim = $request->instansi_pengirim;
+            $surat->bidang_instansi = $request->bidang_instansi;
+            $surat->perihal = $request->perihal;
+            $surat->tgl_terimasurat = $request->tgl_terimasurat;
+            $surat->tgl_surat = $request->tgl_surat;
+            $surat->kode_klas = $request->kode_klas;
+            $fileName = $request->kode_klas . '_' . date('Ymd') . '.pdf';
+            $filePath = $request->file('file_surat')->storeAs('uploads', $fileName, 'public');
+
+            $surat->file_surat = '/storage/' . $filePath;
+        }
+
+        $save = $surat->save();
+
+        if ($save) {
+            return back()->with('success', 'Surat berhasil masuk ke database');
+        } else {
+            return back()->with('fail', 'Something went wrong, try again later');
+        }
+    }
+
     function check(Request $request)
     {
         //Validate requests

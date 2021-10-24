@@ -52,9 +52,6 @@
                     </table>
                     <a href="{{ route('mail.savemail')}}" class="btn btn-primary">masukan surat baru</a>
                      <br>
-                     <br>
-                     <a href="{{ route('disposisi.data')}}" class="btn btn-primary">lakukan disposisi surat</a>
-                     <br>
                     <a href="{{ route ('user.dashboard')}}">Back to dashboard</a>
                 </div>
             </div>
